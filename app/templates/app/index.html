@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberHub Kenya - Futuristic Cyber Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/home_styles.css' %}">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Neon Grid Overlay -->
+    <div class="grid-overlay"></div>
+    
+    <!-- Header with Glowing Navigation -->
+    <header class="futuristic-header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+                <h2>CyberHub <span>Kenya</span></h2>
+            </div>
+            
+            <nav class="neon-nav">
+                <a href="#services" class="nav-link" data-text="Services">Services</a>
+                <a href="#features" class="nav-link" data-text="Features">Features</a>
+                <a href="#pricing" class="nav-link" data-text="Pricing">Pricing</a>
+                <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+                <div class="nav-highlight"></div>
+            </nav>
+            
+            <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn-signup">Sign Up</a>
+            </div>
+            
+            <button class="hamburger" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero Section with Animated Typing Effect -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="typing-text">Elevate Your <span class="highlight">Digital Experience</span></h1>
+                    <p class="subtitle">Kenya's premier cyber services hub with cutting-edge technology and lightning-fast solutions</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="#services" class="btn-primary pulse">Explore Services <i class="fas fa-arrow-right"></i></a>
+                        <a href="register.html" class="btn-secondary">Get Started Free</a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="cyber-sphere">
+                        <div class="sphere-core"></div>
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                        <div class="floating-icons">
+                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-bolt"></i>
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section with Hover Effects -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our <span>Cyber Services</span></h2>
+                <p class="section-subtitle">Premium solutions tailored for the digital age</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-service="1">
+                    <div class="service-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Cyber Security</h3>
+                    <p>Advanced protection against digital threats with real-time monitoring</p>
+                    <div class="service-footer">
+                        <span class="price">From KSh 1,500</span>
+                        <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-hover"></div>
+                </div>
+                
+                <div class="service-card" data-service="2">
+                    <div class="service-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Network Solutions</h3>
+                    <p>High-speed connectivity and infrastructure setup</p>
+                    <div class="service-footer">
+                        <span class="price">From KSh 3,000</span>
+                        <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-hover"></div>
+                </div>
+                
+                <div class="service-card" data-service="3">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Tech Support</h3>
+                    <p>24/7 expert assistance for all your tech needs</p>
+                    <div class="service-footer">
+                        <span class="price">From KSh 800/hr</span>
+                        <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-hover"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section with Animated Cards -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose <span>CyberHub?</span></h2>
+                <p class="section-subtitle">Experience the future of cyber services today</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-number">01</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Our optimized systems deliver results in milliseconds, not minutes</p>
+                    <div class="feature-line"></div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">02</div>
+                    <h3>Military-Grade Security</h3>
+                    <p>Enterprise-level protection for all your digital assets</p>
+                    <div class="feature-line"></div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">03</div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is always ready to assist you, day or night</p>
+                    <div class="feature-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section with Animated Counters -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" data-count="1500">0</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-value" data-count="98">0</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-value" data-count="24">0</div>
+                    <div class="stat-label">Support Hours</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-value" data-count="500">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Digital Experience?</h2>
+                <p>Join thousands of satisfied clients who trust CyberHub Kenya for their cyber needs</p>
+                <a href="register.html" class="btn-primary pulse">Get Started Now <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="futuristic-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <h2>CyberHub <span>Kenya</span></h2>
+                    </div>
+                    <p>Pioneering the future of cyber services in Africa with cutting-edge technology and unparalleled expertise.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Cyber Security</a></li>
+                        <li><a href="#">Network Solutions</a></li>
+                        <li><a href="#">Tech Support</a></li>
+                        <li><a href="#">Data Recovery</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-phone"></i> +254 700 123456</li>
+                        <li><i class="fas fa-envelope"></i> info@cyberhub.co.ke</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 CyberHub Kenya. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -194,3 +194,6 @@ def check_phone(request):
     exists = False
     # If phone is stored in User or UserProfile, check here. For now, always return False.
     return JsonResponse({'exists': exists})
+
+def index(request):
+    return render(request, 'app/index.html')
