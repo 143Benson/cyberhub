@@ -193,11 +193,11 @@
         
         .container {
             position: relative;
-            width: 400px;
+            width: 600px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 40px;
+            padding: 50px 60px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             z-index: 10;
@@ -271,10 +271,10 @@
         
         .input-group input, .input-group select {
             width: 100%;
-            padding: 15px 20px 15px 50px;
+            padding: 18px 24px 18px 54px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
-            border-radius: 30px;
+            border-radius: 5px;
             color: white;
             font-size: 16px;
             outline: none;
@@ -415,7 +415,8 @@
             color: var(--accent);
             text-decoration: none;
         }.chat-container {
-            max-height: 400px;
+            max-height: 600px;
+            min-height: 350px;
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -431,11 +432,11 @@
         
         .chat-message {
             background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
+            padding: 22px 28px;
             border-radius: 15px;
             margin-bottom: 15px;
             color: white;
-            max-width: 80%;
+            max-width: 98%;
             align-self: flex-start;
             position: relative;
             opacity: 0;
@@ -615,6 +616,30 @@
             box-shadow: 0 0 8px 2px rgba(0,0,0,0.12);
             will-change: transform, opacity, left, top;
         }
+@media (max-width: 768px) {
+    .container {
+        width: 98vw;
+        max-width: 99vw;
+        min-width: 0;
+        padding: 18vw 2vw 10vw 2vw;
+    }
+    .chat-container {
+        max-height: 80vh;
+        min-height: 40vh;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .chat-message {
+        padding: 7vw 4vw;
+        font-size: 1.1em;
+        max-width: 100%;
+    }
+    .input-group input, .input-group select {
+        padding: 5vw 4vw 5vw 10vw;
+        font-size: 1.1em;
+    }
+}
+// ... existing code ...
     </style>
 </head>
 <body>
@@ -646,10 +671,10 @@
                     </div>
                     <div class="chat-message" style="display: none;">
                         Hi there! 👋 Let's get you registered. What's your full name?
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="full_name" placeholder="Your full name" required>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="full_name" placeholder="Your full name" required>
+                        </div>
                     </div>
                     <button type="button" class="next-btn" onclick="nextStep(1)">Next <i class="fas fa-arrow-right-long"></i></button>
                 </div>
@@ -663,10 +688,10 @@
                     </div>
                     <div class="chat-message" style="display: none;">
                         Great! What's your email address?
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Your email" required>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Your email" required>
+                        </div>
                     </div>
                     <button type="button" class="next-btn" onclick="nextStep(2)">Next <i class="fas fa-arrow-right-long"></i></button>
                 </div>
@@ -680,10 +705,10 @@
                     </div>
                     <div class="chat-message" style="display: none;">
                         And your Kenyan phone number? (e.g., 0712345678)
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" name="phone" placeholder="Phone number" required>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" name="phone" placeholder="Phone number" required>
+                        </div>
                     </div>
                     <button type="button" class="next-btn" onclick="nextStep(3)">Next <i class="fas fa-arrow-right-long"></i></button>
                 </div>
@@ -697,10 +722,10 @@
                     </div>
                     <div class="chat-message" style="display: none;">
                         Choose a cool username for your account
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-at"></i>
-                        <input type="text" name="username" placeholder="Username" required>
+                        <div class="input-group">
+                            <i class="fas fa-at"></i>
+                            <input type="text" name="username" placeholder="Username" required>
+                        </div>
                     </div>
                     <button type="button" class="next-btn" onclick="nextStep(4)">Next <i class="fas fa-arrow-right-long"></i></button>
                 </div>
@@ -714,17 +739,17 @@
     </div>
     <div class="chat-message" style="display: none;">
         Create a strong password (at least 8 characters)
-    </div>
-    <div class="input-group password-field">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password1" placeholder="Password" required>
-        <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
-    </div>
-    <div class="password-strength">
-        <div class="strength-meter">
-            <div class="strength-bar"></div>
+        <div class="input-group password-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password1" placeholder="Password" required>
+            <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
         </div>
-        <div class="strength-text">Password Strength: <span>Weak</span></div>
+        <div class="password-strength">
+            <div class="strength-meter">
+                <div class="strength-bar"></div>
+            </div>
+            <div class="strength-text">Password Strength: <span>Weak</span></div>
+        </div>
     </div>
     <button type="button" class="next-btn" onclick="nextStep(5)">Next <i class="fas fa-arrow-right-long"></i></button>
 </div>
@@ -738,15 +763,15 @@
     </div>
     <div class="chat-message" style="display: none;">
         Please confirm your password
-    </div>
-    <div class="input-group password-field">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password2" placeholder="Confirm password" required>
-        <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
-    </div>
-    <div class="terms">
-        <input type="checkbox" id="terms" required>
-        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        <div class="input-group password-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password2" placeholder="Confirm password" required>
+            <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+        </div>
+        <div class="terms">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
     </div>
     <button type="submit" class="next-btn">Complete Registration <i class="fas fa-user-plus"></i></button>
 </div>
