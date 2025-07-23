@@ -1,0 +1,60 @@
+# Core Django & Utilities
+Django==5.2.4
+asgiref==3.9.1
+sqlparse==0.5.3
+tzdata==2025.2
+python-dotenv==1.1.1
+python-decouple==3.8
+dj-database-url==2.3.0
+gunicorn==23.0.0
+whitenoise==6.9.0
+
+# Forms and Templates
+django-crispy-forms==2.4
+crispy-bootstrap5==2025.6
+django-widget-tweaks==1.5.0
+Jinja2==3.1.6
+
+# Google OAuth & Authentication
+social-auth-app-django==5.4.3
+social-auth-core==4.6.1
+requests==2.32.3
+requests-oauthlib==2.0.0
+oauthlib==3.2.2
+python3-openid==3.2.0
+PyJWT==2.10.1
+
+# PDF, QR, and Image Handling
+xhtml2pdf==0.2.17
+qrcode==8.2
+reportlab==4.4.2
+Pillow==11.3.0
+pyphen==0.17.2
+svglib==1.5.1
+
+# HTML & CSS Rendering
+lxml==5.4.0
+cssselect2==0.8.0
+tinycss2==1.4.0
+html5lib==1.1
+webcolors==24.11.1
+webencodings==0.5.1
+tinyhtml5==2.0.0
+beautifulsoup4==4.13.4
+soupsieve==2.7
+
+# Security
+argon2-cffi==23.1.0
+cffi==1.17.1
+cryptography==45.0.2
+pycparser==2.22
+
+# Localization
+pytz==2025.2
+tzlocal==5.3.1
+babel==2.17.0
+
+# Encoding
+charset-normalizer==3.4.2
+idna==3.10
+urllib3==2.4.0
