@@ -845,7 +845,15 @@
     <div class="floating-icons" id="floatingIcons"></div>
 
     <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+    <div class="toast-container" id="toastContainer">
+        {% if not request.path == '/' %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="toast">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

@@ -3,10 +3,12 @@ const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.createElement('div');
 mobileMenu.className = 'mobile-menu';
 mobileMenu.innerHTML = `
+    <a href="#" class="nav-link" id="mobileHomeNav" data-text="Home">Home</a>
     <a href="#services" class="nav-link" data-text="Services">Services</a>
     <a href="#features" class="nav-link" data-text="Features">Features</a>
     <a href="#pricing" class="nav-link" data-text="Pricing">Pricing</a>
     <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+    <a href="#" class="nav-link" id="mobileCareersNav" data-text="Careers">Careers</a>
     <div class="mobile-auth">
         <a href="login.html" class="btn-login">Login</a>
         <a href="register.html" class="btn-signup">Sign Up</a>
@@ -31,6 +33,58 @@ mobileOverlay.addEventListener('click', () => {
     mobileOverlay.classList.remove('active');
     document.body.classList.remove('no-scroll');
 });
+
+// Collapse mobile menu on nav link click, and handle Careers modal
+mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Careers link opens modal, others scroll or navigate
+        if (this.id === 'mobileCareersNav') {
+            e.preventDefault();
+            const joinUsModal = document.getElementById('joinUsModal');
+            joinUsModal.classList.add('show');
+        }
+        // Home link scrolls to top
+        if (this.id === 'mobileHomeNav') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Collapse menu for all links
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    });
+});
+
+// After mobileMenu is appended to the DOM
+// Mobile Login button opens login modal
+const mobileLoginBtn = mobileMenu.querySelector('.btn-login');
+if (mobileLoginBtn) {
+    mobileLoginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) loginModal.classList.add('show');
+        // Collapse mobile menu
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    });
+}
+// Mobile Sign Up button opens register modal
+const mobileSignupBtn = mobileMenu.querySelector('.btn-signup');
+if (mobileSignupBtn) {
+    mobileSignupBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const registerModal = document.getElementById('registerModal');
+        if (registerModal) registerModal.classList.add('show');
+        // Collapse mobile menu
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    });
+}
 
 // Header Scroll Effect
 const header = document.querySelector('.futuristic-header');

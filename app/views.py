@@ -94,10 +94,10 @@ def login_view(request):
     if request.method == 'POST':
         username_or_email = request.POST.get('username')
         password = request.POST.get('password')
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
         
         # Try to authenticate with username first
         user = authenticate(request, username=username_or_email, password=password)
-        
         # If authentication with username fails, try with email
         if user is None:
             try:
@@ -105,15 +105,17 @@ def login_view(request):
                 user = authenticate(request, username=user_with_email.username, password=password)
             except User.DoesNotExist:
                 pass
-        
         if user is not None:
             auth_login(request, user)
+            if is_ajax:
+                return JsonResponse({'success': True, 'redirect_url': '/dashboard/'})
             messages.success(request, 'Login successful!')
             return redirect('dashboard')
         else:
             error = 'Invalid username,email or password.'
-    
-    return render(request, 'app/login.html', {
+            if is_ajax:
+                return JsonResponse({'success': False, 'error': error}, status=400)
+    return render(request, 'app/index.html', {
         'username': username_or_email,
         'error': error
     })
@@ -150,11 +152,9 @@ def register_view(request):
                 first_name=full_name.split()[0] if full_name else '',
                 last_name=' '.join(full_name.split()[1:]) if full_name and len(full_name.split()) > 1 else ''
             )
-            
-            # Here you could save additional fields like phone to a UserProfile model
-            # profile = UserProfile.objects.create(user=user, phone=phone)
-            
-            messages.success(request, 'Registration successful! Please log in.')
+            user.save()
+            auth_login(request, user)            
+            messages.success(request, 'Registration successful! Welcome to CyberHub Kenya')
             return redirect('dashboard')
             
         except Exception as e:
