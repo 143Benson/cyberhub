@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberHub Kenya - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-laptop-code"></i>
+            <h2>CyberHub Kenya</h2>
+        </div>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <form method="post" autocomplete="off" action="{% url 'login' %}" id="loginForm">
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+            {% csrf_token %}
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Username or Email" required value="{{ username|default:'' }}">
+            </div>
+            <div class="input-group password-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+            </div>
+            <button type="submit" id="loginBtn">LOGIN <i class="fa fa-play fa-xs ms-2"></i></button>
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a href="{% url 'register' %}">Create Account</a>
+            </div>
+        </form>
+    </div>
+    <div class="floating-icons" id="floatingIcons"></div>
+    <div class="message-container" id="messageContainer"></div>
+
+    <script>
+        // Floating icons animation
+        const icons = ['fa-laptop', 'fa-mobile-alt', 'fa-wifi', 'fa-gamepad', 'fa-headphones', 'fa-keyboard', 'fa-mouse'];
+        const floatingIcons = document.getElementById('floatingIcons');
+        for (let i = 0; i < 15; i++) {
+            const icon = document.createElement('i');
+            icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]}`;
+            icon.style.left = `${Math.random() * 100}%`;
+            icon.style.bottom = `-50px`;
+            icon.style.fontSize = `${Math.random() * 20 + 10}px`;
+            icon.style.animationDuration = `${Math.random() * 15 + 10}s`;
+            icon.style.animationDelay = `${Math.random() * 5}s`;
+            floatingIcons.appendChild(icon);
+        }
+
+        // Form submission handler
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleFormSubmission();
+        });
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission();
+        });
+        
+        function handleFormSubmission() {
+            const btn = loginForm.querySelector('button[type="submit"]');
+            btn.innerHTML = 'LOGGING IN <i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            
+            // Submit the form after a small delay to show the spinner
+            setTimeout(() => {
+                loginForm.submit();
+            }, 100);
+        }
+
+        // Toast message handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageContainer = document.getElementById('messageContainer');
+            
+            // Display Django messages as toasts
+            {% if messages %}
+                {% for message in messages %}
+                    showToast('{{ message }}', '{{ message.tags }}');
+                {% endfor %}
+            {% endif %}
+            
+            // Function to show toast messages
+            window.showToast = function(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast bg-${type}`;
+                toast.innerHTML = `
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                `;
+                
+                messageContainer.appendChild(toast);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    toast.classList.add('hide');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 500);
+                }, 5000);
+            };
+        });
+    </script>
+</body>
+</html>

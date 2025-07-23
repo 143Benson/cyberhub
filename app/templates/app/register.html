@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberHub Kenya - Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ <style>
+/* Toast styles */
+.toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    min-width: 250px;
+    background: #dc3545;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(220,53,69,0.15);
+    font-size: 16px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: toastIn 0.5s forwards, toastOut 0.5s 4.5s forwards;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@keyframes toastIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes toastOut {
+    to {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+}
+        :root {
+            --primary: #006644; /* Kenyan green */
+            --secondary: #FF0000; /* Kenyan red */
+            --accent: #F0A500; /* Gold accent */
+            --light: #F5F5F5;
+            --dark: #333333;
+        }/* Password Toggle Styles */
+/* Password Toggle Styles */
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field input {
+    flex: 1;
+    padding-left: 50px; /* space for lock icon */
+    padding-right: 40px; /* space for eye icon */
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    cursor: pointer;
+    z-index: 2;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+/* Password Strength Meter */
+.password-strength {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.strength-meter {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    background: #dc3545; /* Red - weak */
+    transition: width 0.3s, background 0.3s;
+}
+
+.strength-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+.strength-text span {
+    color: #dc3545; /* Red - weak */
+}
+.back-to-login {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.back-to-login a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.back-to-login a:hover {
+    color: var(--accent);
+}
+
+.back-to-login i {
+    margin-right: 5px;
+}
+        .terms input[type="checkbox"] {
+        position: relative;
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--accent);
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+
+    .terms input[type="checkbox"]:checked {
+        background-color: var(--accent);
+    }
+
+    .terms input[type="checkbox"]:checked::after {
+        content: '\f00c';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        position: absolute;
+        color: var(--dark);
+        font-size: 12px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .terms label {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #006644, #000000);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .kenyan-flag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(to bottom, 
+                black 0%, black 33%, 
+                red 33%, red 66%, 
+                green 66%, green 100%);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .container {
+            position: relative;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            z-index: 10;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                transparent 45%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 55%,
+                transparent 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-20%, -20%); }
+            100% { transform: rotate(30deg) translate(20%, 20%); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: var(--accent);
+            margin-bottom: 10px;
+            transition: box-shadow 0.4s, color 0.4s;
+        }
+        
+        .logo i.glow {
+            color: #fff700;
+            box-shadow: 0 0 30px 10px #fff700, 0 0 60px 20px #F0A500;
+            filter: brightness(1.2);
+        }
+        
+        .logo h2 {
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(240, 165, 0, 0.5);
+        }
+        
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+.input-group i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 18px;
+    z-index: 1;
+}
+
+.password-field .fa-lock {
+    left: 20px;
+    right: auto;
+}
+
+.password-field .password-toggle {
+    right: 15px;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    cursor: pointer;
+    z-index: 2;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            border: none;
+            border-radius: 30px;
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(240, 165, 0, 0.4);
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #FFB800;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(240, 165, 0, 0.6);
+        }
+        
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .links a:hover {
+            color: var(--accent);
+        }
+        
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-icons i {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 10s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .language-selector {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+        }
+        
+        .language-selector option {
+            background: var(--dark);
+        }
+        
+        .terms {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        .terms input {
+            margin-right: 10px;
+        }
+        
+        .terms a {
+            color: var(--accent);
+            text-decoration: none;
+        }.chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+        
+        .chat-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            color: white;
+            max-width: 80%;
+            align-self: flex-start;
+            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: messageIn 0.5s ease-out forwards;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes messageIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                transparent 100%);
+            animation: progressShine 2s infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Reverse and enhance form step animation */
+        .input-group {
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(-30px) scale(0.95); /* Start from below and slightly smaller */
+            animation: inputInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes inputInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95); /* Start from below */
+                filter: blur(6px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1.03);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+        
+        .next-btn {
+            margin-top: 20px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: buttonIn 0.5s ease-out 0.7s forwards;
+        }
+        
+        @keyframes buttonIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            opacity: 0;
+            z-index: 1000;
+            animation: confettiFall 3s ease-in forwards;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .success-check {
+            font-size: 60px;
+            color: #28a745;
+            text-align: center;
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: checkIn 0.5s ease-out 0.5s forwards;
+        }
+        
+        @keyframes checkIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .data-bit {
+            pointer-events: none;
+            box-shadow: 0 0 8px 2px rgba(0,0,0,0.12);
+            will-change: transform, opacity, left, top;
+        }
+    </style>
+</head>
+<body>
+    <div class="kenyan-flag"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-laptop-code"></i>
+            <h2>CyberHub Kenya</h2>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+        
+        <form id="registrationForm" method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="chat-container" id="chatContainer">
+                <!-- Update back-to-login icon -->
+                <div class="back-to-login">
+                    <a href="{% url 'login' %}"><i class="fas fa-circle-chevron-left"></i> Back to Login</a>
+                </div>
+                <!-- Step 1: Full Name -->
+                <div class="form-step active" id="step1">
+                    <div class="typing-indicator" id="typing1">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <div class="chat-message" style="display: none;">
+                        Hi there! 👋 Let's get you registered. What's your full name?
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="full_name" placeholder="Your full name" required>
+                    </div>
+                    <button type="button" class="next-btn" onclick="nextStep(1)">Next <i class="fas fa-arrow-right-long"></i></button>
+                </div>
+                
+                <!-- Step 2: Email -->
+                <div class="form-step" id="step2">
+                    <div class="typing-indicator" id="typing2">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <div class="chat-message" style="display: none;">
+                        Great! What's your email address?
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Your email" required>
+                    </div>
+                    <button type="button" class="next-btn" onclick="nextStep(2)">Next <i class="fas fa-arrow-right-long"></i></button>
+                </div>
+                
+                <!-- Step 3: Phone -->
+                <div class="form-step" id="step3">
+                    <div class="typing-indicator" id="typing3">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <div class="chat-message" style="display: none;">
+                        And your Kenyan phone number? (e.g., 0712345678)
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" name="phone" placeholder="Phone number" required>
+                    </div>
+                    <button type="button" class="next-btn" onclick="nextStep(3)">Next <i class="fas fa-arrow-right-long"></i></button>
+                </div>
+                
+                <!-- Step 4: Username -->
+                <div class="form-step" id="step4">
+                    <div class="typing-indicator" id="typing4">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <div class="chat-message" style="display: none;">
+                        Choose a cool username for your account
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-at"></i>
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <button type="button" class="next-btn" onclick="nextStep(4)">Next <i class="fas fa-arrow-right-long"></i></button>
+                </div>
+                
+               <!-- Step 5: Password -->
+<div class="form-step" id="step5">
+    <div class="typing-indicator" id="typing5">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    </div>
+    <div class="chat-message" style="display: none;">
+        Create a strong password (at least 8 characters)
+    </div>
+    <div class="input-group password-field">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password1" placeholder="Password" required>
+        <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+    </div>
+    <div class="password-strength">
+        <div class="strength-meter">
+            <div class="strength-bar"></div>
+        </div>
+        <div class="strength-text">Password Strength: <span>Weak</span></div>
+    </div>
+    <button type="button" class="next-btn" onclick="nextStep(5)">Next <i class="fas fa-arrow-right-long"></i></button>
+</div>
+
+<!-- Step 6: Confirm Password -->
+<div class="form-step" id="step6">
+    <div class="typing-indicator" id="typing6">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    </div>
+    <div class="chat-message" style="display: none;">
+        Please confirm your password
+    </div>
+    <div class="input-group password-field">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password2" placeholder="Confirm password" required>
+        <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+    </div>
+    <div class="terms">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+    </div>
+    <button type="submit" class="next-btn">Complete Registration <i class="fas fa-user-plus"></i></button>
+</div>
+                
+                <!-- Success Message -->
+                <div id="successMessage" style="display: none;">
+                    <div class="success-check">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="chat-message">
+                        Awesome! 🎉 Your account has been created successfully. Redirecting you to login...
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="floating-icons" id="floatingIcons"></div>
+    
+    <script>
+        // Toast function
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class='fas fa-exclamation-circle'></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+        // Floating icons (keep your existing code)
+        const icons = ['fa-laptop', 'fa-mobile-alt', 'fa-wifi', 'fa-gamepad', 'fa-headphones', 'fa-keyboard', 'fa-mouse'];
+        const floatingIcons = document.getElementById('floatingIcons');
+        
+        for (let i = 0; i < 15; i++) {
+            const icon = document.createElement('i');
+            icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]}`;
+            icon.style.left = `${Math.random() * 100}%`;
+            icon.style.bottom = `-50px`;
+            icon.style.fontSize = `${Math.random() * 20 + 10}px`;
+            icon.style.animationDuration = `${Math.random() * 15 + 10}s`;
+            icon.style.animationDelay = `${Math.random() * 5}s`;
+            floatingIcons.appendChild(icon);
+        }
+        
+        // Show initial typing indicator and message
+        setTimeout(() => {
+            document.getElementById('typing1').style.display = 'none';
+            document.querySelector('#step1 .chat-message').style.display = 'block';
+        }, 1500);
+        
+        // Form step navigation
+        let currentStep = 1;
+        const totalSteps = 6;
+        
+        // AJAX check for existing username
+        async function isUsernameTaken(username) {
+            const response = await fetch(`/check-username/?username=${encodeURIComponent(username)}`);
+            if (!response.ok) return false;
+            const data = await response.json();
+            return data.exists;
+        }
+
+        // Add AJAX check for email and phone existence
+        async function isEmailTaken(email) {
+            const response = await fetch(`/check-email/?email=${encodeURIComponent(email)}`);
+            if (!response.ok) return false;
+            const data = await response.json();
+            return data.exists;
+        }
+        async function isPhoneTaken(phone) {
+            const response = await fetch(`/check-phone/?phone=${encodeURIComponent(phone)}`);
+            if (!response.ok) return false;
+            const data = await response.json();
+            return data.exists;
+        }
+
+        // Enhanced nextStep for username and password strength
+        async function nextStep(step) {
+            // Validate current step before proceeding
+            if (await validateStep(step)) {
+                const stepEl = document.getElementById(`step${step}`);
+                createDataAbsorption(stepEl);
+                document.getElementById(`step${step}`).classList.remove('active');
+                highlightPCIcon(); // Add this line
+                currentStep = step + 1;
+                if (currentStep <= totalSteps) {
+                    const nextTyping = document.getElementById(`typing${currentStep}`);
+                    nextTyping.style.display = 'inline-flex';
+                    setTimeout(() => {
+                        nextTyping.style.display = 'none';
+                        const nextMessage = document.querySelector(`#step${currentStep} .chat-message`);
+                        nextMessage.style.display = 'block';
+                        document.getElementById(`step${currentStep}`).classList.add('active');
+                        const chatContainer = document.getElementById('chatContainer');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 1500);
+                }
+                updateProgressBar();
+            }
+        }
+        
+        async function validateStep(step) {
+            const input = document.querySelector(`#step${step} input`);
+            if (input && !input.value) {
+                input.focus();
+                showToast('This field is required.');
+                return false;
+            }
+            // Email uniqueness check
+            if (step === 2) {
+                const email = input.value.trim();
+                if (await isEmailTaken(email)) {
+                    input.focus();
+                    showToast('Email already registered. Please use another.');
+                    return false;
+                }
+            }
+            // Phone uniqueness check
+            if (step === 3) {
+                const phone = input.value.trim();
+                if (await isPhoneTaken(phone)) {
+                    input.focus();
+                    showToast('Phone number already registered. Please use another.');
+                    return false;
+                }
+            }
+            // Username uniqueness check
+            if (step === 4) {
+                const username = input.value.trim();
+                if (await isUsernameTaken(username)) {
+                    input.focus();
+                    showToast('Username already exists. Please choose another.');
+                    return false;
+                }
+            }
+            // Password strength check
+            if (step === 5) {
+                const password = input.value;
+                let strength = 0;
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                if (strength < 4) {
+                    input.focus();
+                    showToast('Password is not strong enough. Please use a stronger password.');
+                    return false;
+                }
+            }
+            // Password match check
+            if (step === 6) {
+                const password = document.querySelector('input[name="password1"]').value;
+                const confirm = document.querySelector('input[name="password2"]').value;
+                if (password !== confirm) {
+                    document.querySelector('input[name="password2"]').focus();
+                    showToast('Passwords do not match.');
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+        
+        // Remove createConfetti and replace with createDataAbsorption
+        function createDataAbsorption(element) {
+            const pcIcon = document.querySelector('.logo i');
+            if (!pcIcon) return;
+            const rect = element.getBoundingClientRect();
+            const iconRect = pcIcon.getBoundingClientRect();
+            const colors = ['#28a745', '#F0A500', '#17a2b8', '#FFB800', '#006644'];
+            for (let i = 0; i < 12; i++) {
+                const bit = document.createElement('div');
+                bit.className = 'data-bit';
+                bit.style.position = 'fixed';
+                bit.style.left = `${rect.left + rect.width/2 + (Math.random()-0.5)*40}px`;
+                bit.style.top = `${rect.top + rect.height/2 + (Math.random()-0.5)*20}px`;
+                bit.style.width = '10px';
+                bit.style.height = '10px';
+                bit.style.borderRadius = '50%';
+                bit.style.background = colors[Math.floor(Math.random()*colors.length)];
+                bit.style.zIndex = 2000;
+                bit.style.opacity = 0.85;
+                bit.style.transition = 'all 0.9s cubic-bezier(0.23, 1, 0.32, 1)';
+                document.body.appendChild(bit);
+                setTimeout(() => {
+                    bit.style.left = `${iconRect.left + iconRect.width/2 - 5}px`;
+                    bit.style.top = `${iconRect.top + iconRect.height/2 - 5}px`;
+                    bit.style.opacity = 0;
+                    bit.style.transform = 'scale(0.3)';
+                }, 10);
+                setTimeout(() => {
+                    bit.remove();
+                }, 950);
+            }
+        }
+        
+        // Phone number formatting
+        const phoneInput = document.querySelector('input[type="tel"]');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = '0' + value.substring(1);
+                    if (value.length > 4) {
+                        value = value.substring(0, 4) + ' ' + value.substring(4);
+                    }
+                    if (value.length > 8) {
+                        value = value.substring(0, 8) + ' ' + value.substring(8);
+                    }
+                    this.value = value.substring(0, 12);
+                }
+            });
+        }
+        
+        // Form submission
+        const form = document.getElementById('registrationForm');
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                // Final validation for all steps
+                for (let step = 1; step <= totalSteps; step++) {
+                    if (!(await validateStep(step))) {
+                        showToast('Please Confirm your password');
+                        return;
+                    }
+                }
+                const terms = document.getElementById('terms');
+                if (!terms.checked) {
+                    showToast('You must agree to the Terms of Service and Privacy Policy.');
+                    terms.focus();
+                    return;
+                }
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = 'CREATING ACCOUNT <i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Hide form and show success message
+                    document.querySelectorAll('.form-step').forEach(step => {
+                        step.style.display = 'none';
+                    });
+                    
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('progressBar').style.width = '100%';
+                    document.getElementById('progressBar').style.background = '#28a745';
+                    
+                    // Create celebration confetti
+                    for (let i = 0; i < 50; i++) {
+                        setTimeout(() => {
+                            createConfetti(document.querySelector('.container'), true);
+                        }, i * 100);
+                    }
+                    
+                    // Scroll to bottom
+                    const chatContainer = document.getElementById('chatContainer');
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // Redirect after delay
+                    setTimeout(() => {
+                        form.submit();
+                    }, 3000);
+                }, 1500);
+            });
+        }// Password toggle function
+function togglePassword(icon) {
+    const input = icon.previousElementSibling;
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = "password";
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+// Password strength checker
+document.querySelector('input[name="password1"]').addEventListener('input', function(e) {
+    const password = e.target.value;
+    const strengthBar = document.querySelector('.strength-bar');
+    const strengthText = document.querySelector('.strength-text span');
+    
+    // Reset
+    strengthBar.style.width = '0%';
+    strengthBar.style.background = '#dc3545';
+    strengthText.style.color = '#dc3545';
+    strengthText.textContent = 'Weak';
+    
+    if (password.length > 0) {
+        let strength = 0;
+        
+        // Length check
+        if (password.length >= 8) strength += 1;
+        if (password.length >= 12) strength += 1;
+        
+        // Complexity checks
+        if (/[A-Z]/.test(password)) strength += 1;
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+        
+        // Update UI
+        const width = (strength / 5) * 100;
+        strengthBar.style.width = `${width}%`;
+        
+        if (strength >= 4) {
+            strengthBar.style.background = '#28a745'; // Green - strong
+            strengthText.style.color = '#28a745';
+            strengthText.textContent = 'Strong';
+        } else if (strength >= 2) {
+            strengthBar.style.background = '#ffc107'; // Yellow - medium
+            strengthText.style.color = '#ffc107';
+            strengthText.textContent = 'Medium';
+        }
+    }
+});
+
+// Add glow to PC icon when a step is completed
+function highlightPCIcon() {
+    const pcIcon = document.querySelector('.logo i');
+    if (pcIcon) {
+        pcIcon.classList.add('glow');
+        setTimeout(() => {
+            pcIcon.classList.remove('glow');
+        }, 800);
+    }
+}
+    </script>
+</body>
+</html>
