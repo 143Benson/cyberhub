@@ -31,6 +31,9 @@ reportlab==4.4.2
 Pillow==11.3.0
 pyphen==0.17.2
 svglib==1.5.1
+pdf2docx
+PyPDF2
+pdf2image
 
 # HTML & CSS Rendering
 lxml==5.4.0

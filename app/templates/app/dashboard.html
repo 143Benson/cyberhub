@@ -720,6 +720,16 @@
         .mobile-search-bar {
             display: none;
         }
+        .dashboard-main-content {
+            padding-top: 80px !important; /* Use 80px for mobile, 100px for desktop */
+            margin-bottom: 8px !important;
+        }
+        @media (max-width: 600px) {
+            .dashboard-main-content {
+                padding-top: 80px !important; /* 80px is safe for your mobile navbar */
+                margin-bottom: 2px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -785,7 +795,7 @@
         </div>
         
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content" id="dashboardMainContent">
             <div class="header">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>

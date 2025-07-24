@@ -1,0 +1,1092 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberHub Kenya - Futuristic Cyber Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/home_styles.css' %}">
+    <style>
+    /* Modal Overlay Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: auto;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal.show {
+        display: flex;
+    }
+    .modal-content {
+        background: #181c24;
+        margin: auto;
+        padding: 2rem 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        max-width: 400px;
+        width: 90vw;
+        color: #fff;
+        position: relative;
+        animation: modalPop 0.25s cubic-bezier(.4,2,.6,1) 1;
+    }
+    @keyframes modalPop {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-content h2 {
+        margin-top: 0;
+        color: #00fff7;
+        font-size: 2rem;
+        text-align: center;
+    }
+    .modal-content label {
+        display: block;
+        margin-top: 1rem;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+    }
+    .modal-content input,
+    .modal-content textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #333;
+        background: #23283a;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+    .modal-content button[type="submit"] {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .modal-content .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #fff;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .modal-content .close:hover {
+        color: #00fff7;
+    }
+    /* Registration Modal Clean Theme (No Glows, No Focus Outline) */
+    #registerModal .modal-content {
+        background: rgba(24, 28, 36, 0.92);
+        backdrop-filter: blur(12px);
+        border-radius: 18px;
+        box-shadow: 0 0 32px 4px rgba(0,0,0,0.18), 0 8px 32px rgba(0,0,0,0.25);
+        border: 1.5px solid rgba(0,255,247,0.08);
+        animation: modalPop 0.4s cubic-bezier(.4,2,.6,1) 1;
+        position: relative;
+    }
+    #registerModal .logo i {
+        color: #00fff7;
+        text-shadow: none;
+        font-size: 2.5rem;
+        transition: none;
+    }
+    #registerModal .logo i.glow {
+        color: #fff700;
+        text-shadow: none;
+    }
+    #registerModal .logo h2 {
+        color: #00fff7;
+        font-weight: 700;
+        letter-spacing: 1px;
+        font-size: 2.1rem;
+        text-shadow: none;
+    }
+    #registerModal .logo h2 span {
+        color: #F0A500;
+        text-shadow: none;
+    }
+    #registerModal .progress-bar {
+        height: 6px;
+        background: rgba(0,255,247,0.08);
+        border-radius: 6px;
+        margin-bottom: 18px;
+        overflow: hidden;
+        box-shadow: none;
+    }
+    #registerModal .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #00fff7 0%, #F0A500 100%);
+        box-shadow: none;
+        transition: width 0.5s cubic-bezier(.4,2,.6,1), background 0.4s;
+    }
+    #registerModal .chat-container {
+        max-height: 60vh;
+        min-height: 320px;
+        overflow-y: auto;
+        padding-right: 6px;
+        scrollbar-width: thin;
+        scrollbar-color: #00fff7 #23283a;
+    }
+    #registerModal .chat-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    #registerModal .chat-container::-webkit-scrollbar-thumb {
+        background: #00fff7;
+        border-radius: 8px;
+    }
+    #registerModal .form-step {
+        display: none;
+        animation: fadeInUp 0.7s cubic-bezier(.4,2,.6,1);
+    }
+    #registerModal .form-step.active {
+        display: block;
+    }
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+        60% { opacity: 1; transform: translateY(-10px) scale(1.03); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #registerModal .chat-message {
+        background: rgba(0,255,247,0.04);
+        border-left: 3px solid #00fff7;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        color: #fff;
+        font-size: 1.08rem;
+        box-shadow: none;
+        animation: messageIn 0.5s cubic-bezier(.4,2,.6,1);
+        padding: 1.2rem 1.4rem 1.2rem 1.4rem;
+    }
+    @keyframes messageIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    #registerModal .typing-indicator {
+        background: rgba(0,255,247,0.06);
+        border-radius: 20px;
+        margin-bottom: 12px;
+        box-shadow: none;
+    }
+    #registerModal .typing-dot {
+        background: #F0A500;
+        box-shadow: none;
+    }
+    #registerModal .input-group {
+        display: flex;
+        align-items: center;
+        background: rgba(35, 40, 58, 0.95);
+        border-radius: 8px;
+        margin-bottom: 1.1rem;
+        padding: 0.5rem 0.75rem;
+        border: 1.5px solid transparent;
+        transition: none;
+    }
+    #registerModal .input-group:focus-within {
+        border: 1.5px solid transparent;
+        box-shadow: none;
+    }
+    #registerModal .input-group i {
+        color: #00fff7;
+        margin-right: 10px;
+        font-size: 1.1rem;
+        transition: none;
+        text-shadow: none;
+    }
+    #registerModal .input-group input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        flex: 1;
+        font-size: 1.08rem;
+        padding: 0.5rem 0.2rem;
+        transition: none;
+        box-shadow: none;
+    }
+    #registerModal .input-group input:focus {
+        color: #00fff7;
+        text-shadow: none;
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+    #registerModal .input-group .password-toggle {
+        margin-left: auto;
+        cursor: pointer;
+        color: #888;
+        font-size: 1.1rem;
+        transition: none;
+        text-shadow: none;
+    }
+    #registerModal .input-group .password-toggle:hover {
+        color: #F0A500;
+        text-shadow: none;
+    }
+    #registerModal .btn-primary, #registerModal .next-btn, #registerModal button[type="submit"] {
+        background: linear-gradient(90deg, #00fff7 0%, #F0A500 100%);
+        color: #181c24;
+        border: none;
+        border-radius: 24px;
+        font-weight: 600;
+        font-size: 1.08rem;
+        box-shadow: none;
+        margin-top: 0.5rem;
+        width: 100%;
+        padding: 0.7rem 0;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.15s;
+        outline: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    #registerModal .btn-primary:hover, #registerModal .next-btn:hover, #registerModal button[type="submit"]:hover {
+        background: linear-gradient(90deg, #F0A500 0%, #00fff7 100%);
+        box-shadow: none;
+    }
+    #registerModal .btn-primary:active, #registerModal .next-btn:active, #registerModal button[type="submit"]:active {
+        /* Removed transform: scale(0.98); */
+    }
+    #registerModal .terms label, #registerModal .terms a {
+        color: #00fff7;
+        text-shadow: none;
+    }
+    #registerModal .terms input[type="checkbox"]:checked {
+        accent-color: #F0A500;
+    }
+    #registerModal .password-strength .strength-bar {
+        border-radius: 4px;
+        box-shadow: none;
+    }
+    #registerModal .password-strength .strength-text span {
+        text-shadow: none;
+    }
+    #registerModal .success-check {
+        font-size: 3.2rem;
+        color: #00fff7;
+        text-align: center;
+        margin: 20px 0;
+        opacity: 0;
+        transform: scale(0.5);
+        animation: checkInGlow 0.7s 0.5s forwards;
+        text-shadow: none;
+    }
+    @keyframes checkInGlow {
+        to {
+            opacity: 1;
+            transform: scale(1);
+            text-shadow: none;
+        }
+    }
+    /* Subtle grid overlay for modal */
+    #registerModal::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(90deg, rgba(0,255,247,0.02) 0 1px, transparent 1px 40px), repeating-linear-gradient(180deg, rgba(0,255,247,0.02) 0 1px, transparent 1px 40px);
+        z-index: 0;
+        border-radius: 18px;
+    }
+    /* Responsive modal */
+    @media (max-width: 700px) {
+        #registerModal .modal-content {
+            padding: 1.2rem 0.5rem;
+            max-width: 99vw;
+        }
+        #registerModal .logo h2 {
+            font-size: 1.3rem;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Neon Grid Overlay -->
+    <div class="grid-overlay"></div>
+    
+    <!-- Header with Glowing Navigation -->
+    <header class="futuristic-header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+                <h2>CyberHub <span>Kenya</span></h2>
+            </div>
+            
+            <nav class="neon-nav">
+                <a href="#services" class="nav-link" data-text="Services">Services</a>
+                <a href="#features" class="nav-link" data-text="Features">Features</a>
+                <a href="#pricing" class="nav-link" data-text="Pricing">Pricing</a>
+                <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+                <a href="#" class="nav-link" id="careersNav" data-text="Careers">Careers</a>
+                <div class="nav-highlight"></div>
+            </nav>
+            
+            <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+            
+            <button class="hamburger" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+{% block content %}
+
+
+{% endblock %}
+
+    <!-- Footer -->
+    <footer class="futuristic-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <h2>CyberHub <span>Kenya</span></h2>
+                    </div>
+                    <p>Pioneering the future of cyber services in Africa with cutting-edge technology and unparalleled expertise.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Cyber Security</a></li>
+                        <li><a href="#">Network Solutions</a></li>
+                        <li><a href="#">Tech Support</a></li>
+                        <li><a href="#">Data Recovery</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-phone"></i> +254 700 123456</li>
+                        <li><i class="fas fa-envelope"></i> info@cyberhub.co.ke</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 CyberHub Kenya. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Join Us Modal -->
+    <div id="joinUsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeJoinUsModal">&times;</span>
+            <h2>Join Our Team</h2>
+            <p>We're always looking for talented individuals to join CyberHub Kenya! Fill out the form below to apply for open positions.</p>
+            <form id="joinUsForm">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="position">Position Interested In</label>
+                <input type="text" id="position" name="position" required>
+                <label for="message">Tell us about yourself</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit" class="btn-primary">Submit Application</button>
+            </form>
+        </div>
+    </div>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+            <div class="logo" style="justify-content:center; margin-bottom: 1rem;">
+                <i class="fas fa-laptop-code"></i>
+                <h2 style="margin-left: 8px;">CyberHub <span>Kenya</span></h2>
+            </div>
+            <h2 style="margin-bottom: 0.5rem;">Login</h2>
+            <form method="post" autocomplete="off" action="{% url 'login' %}" id="loginFormModal">
+                {% csrf_token %}
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username or Email" required>
+                </div>
+                <div class="input-group password-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword(this)"></i>
+                </div>
+                <button type="submit" class="btn-primary" id="loginBtnModal">LOGIN <i class="fa fa-play fa-xs ms-2"></i></button>
+                <div class="links" style="margin-top: 0.5rem; text-align:center;">
+                    <a href="#">Forgot Password?</a> |
+                    <a href="{% url 'register' %}">Create Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Registration Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; width: 98vw;">
+            <span class="close" id="closeRegisterModal">&times;</span>
+            <div class="logo" style="justify-content:center; margin-bottom: 1rem;">
+                <i class="fas fa-laptop-code"></i>
+                <h2 style="margin-left: 8px;">CyberHub <span>Kenya</span></h2>
+            </div>
+            <div class="progress-bar"><div class="progress" id="modalProgressBar"></div></div>
+            <form id="modalRegistrationForm" method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <div class="chat-container" id="modalChatContainer">
+                    <!-- Step 1: Full Name -->
+                    <div class="form-step active" id="modalStep1">
+                        <div class="typing-indicator" id="modalTyping1">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            Hi there! 👋 Let's get you registered. What's your full name?
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" name="full_name" placeholder="Your full name" required>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" onclick="modalNextStep(1)">Next <i class="fas fa-arrow-right-long"></i></button>
+                    </div>
+                    <!-- Step 2: Email -->
+                    <div class="form-step" id="modalStep2">
+                        <div class="typing-indicator" id="modalTyping2">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            Great! What's your email address?
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" name="email" placeholder="Your email" required>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" onclick="modalNextStep(2)">Next <i class="fas fa-arrow-right-long"></i></button>
+                    </div>
+                    <!-- Step 3: Phone -->
+                    <div class="form-step" id="modalStep3">
+                        <div class="typing-indicator" id="modalTyping3">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            And your Kenyan phone number? (e.g., 0712345678)
+                            <div class="input-group">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" name="phone" placeholder="Phone number" required>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" onclick="modalNextStep(3)">Next <i class="fas fa-arrow-right-long"></i></button>
+                    </div>
+                    <!-- Step 4: Username -->
+                    <div class="form-step" id="modalStep4">
+                        <div class="typing-indicator" id="modalTyping4">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            Choose a cool username for your account
+                            <div class="input-group">
+                                <i class="fas fa-at"></i>
+                                <input type="text" name="username" placeholder="Username" required>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" onclick="modalNextStep(4)">Next <i class="fas fa-arrow-right-long"></i></button>
+                    </div>
+                    <!-- Step 5: Password -->
+                    <div class="form-step" id="modalStep5">
+                        <div class="typing-indicator" id="modalTyping5">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            Create a strong password (at least 8 characters)
+                            <div class="input-group password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" name="password1" placeholder="Password" required>
+                                <i class="fas fa-eye password-toggle" onclick="modalTogglePassword(this)"></i>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-meter">
+                                    <div class="strength-bar" id="modalStrengthBar"></div>
+                                </div>
+                                <div class="strength-text">Password Strength: <span id="modalStrengthText">Weak</span></div>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" onclick="modalNextStep(5)">Next <i class="fas fa-arrow-right-long"></i></button>
+                    </div>
+                    <!-- Step 6: Confirm Password -->
+                    <div class="form-step" id="modalStep6">
+                        <div class="typing-indicator" id="modalTyping6">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <div class="chat-message" style="display: none;">
+                            Please confirm your password
+                            <div class="input-group password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" name="password2" placeholder="Confirm password" required>
+                                <i class="fas fa-eye password-toggle" onclick="modalTogglePassword(this)"></i>
+                            </div>
+                            <div class="terms">
+                                <input type="checkbox" id="modalTerms" required>
+                                <label for="modalTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="next-btn">Complete Registration <i class="fas fa-user-plus"></i></button>
+                    </div>
+                    <!-- Success Message -->
+                    <div id="modalSuccessMessage" style="display: none;">
+                        <div class="success-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="chat-message">
+                            Awesome! 🎉 Your account has been created successfully. Redirecting you to login...
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <style>
+    /* Toast Styles */
+    .toast-container {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+    }
+    .toast-message {
+        background: #23283a;
+        color: #fff;
+        border-left: 4px solid #f44336;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        min-width: 220px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        font-size: 1rem;
+        opacity: 0.98;
+        pointer-events: auto;
+        transition: opacity 0.4s, transform 0.4s;
+        animation: toastIn 0.3s cubic-bezier(.4,2,.6,1);
+    }
+    .toast-message.toast-error { border-left-color: #f44336; }
+    .toast-message.toast-success { border-left-color: #00c853; }
+    .toast-message.hide {
+        opacity: 0;
+        transform: translateX(60px);
+        transition: opacity 0.4s, transform 0.4s;
+    }
+    @keyframes toastIn {
+        0% { opacity: 0; transform: translateX(60px); }
+        100% { opacity: 0.98; transform: translateX(0); }
+    }
+    /* Login Modal Animation and Style */
+    #loginModal .modal-content {
+        animation: modalPop 0.3s cubic-bezier(.4,2,.6,1) 1;
+    }
+    #loginModal .input-group {
+        display: flex;
+        align-items: center;
+        background: #23283a;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    #loginModal .input-group i {
+        color: #00fff7;
+        margin-right: 8px;
+    }
+    #loginModal .input-group input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        flex: 1;
+        font-size: 1rem;
+    }
+    #loginModal .input-group .password-toggle {
+        margin-left: auto;
+        cursor: pointer;
+        color: #888;
+        font-size: 1.1rem;
+    }
+    #loginModal .btn-primary {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+    #loginModal .links a {
+        color: #00fff7;
+        text-decoration: underline;
+        margin: 0 4px;
+        font-size: 0.98rem;
+    }
+    #loginModal .links a:hover {
+        color: #f0a500;
+    }
+    </style>
+    <!-- Toast Container for Django Messages and Login Errors -->
+    <div class="toast-container" id="toastContainer" style="position: fixed; top: 24px; right: 24px; z-index: 99999;"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>
+// Toast function (must be global and defined first)
+function showToast(message, type = 'error') {
+    const toastContainer = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast-message toast-${type}`;
+    toast.innerHTML = `<span>${message}</span>`;
+    toastContainer.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
+// Fast front-end search and category filtering
+const searchInput = document.getElementById('serviceSearch');
+const resetBtn = document.getElementById('resetSearchBtn');
+const categoryBtns = document.querySelectorAll('.category-btn');
+const serviceCards = document.querySelectorAll('.service-card');
+
+searchInput.addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    resetBtn.style.display = val ? 'block' : 'none';
+    serviceCards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(val) ? '' : 'none';
+    });
+});
+
+resetBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    resetBtn.style.display = 'none';
+    serviceCards.forEach(card => card.style.display = '');
+    searchInput.focus();
+});
+
+categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const cat = this.getAttribute('data-category');
+        serviceCards.forEach(card => {
+            const cardCats = card.getAttribute('data-category').split(' ');
+            if (cat === 'all' || cardCats.includes(cat)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        searchInput.value = '';
+        resetBtn.style.display = 'none';
+    });
+});
+
+// Modal logic for Join Us
+const careersNav = document.getElementById('careersNav');
+const joinUsModal = document.getElementById('joinUsModal');
+const closeJoinUsModal = document.getElementById('closeJoinUsModal');
+
+careersNav.addEventListener('click', function(e) {
+    e.preventDefault();
+    joinUsModal.classList.add('show');
+});
+closeJoinUsModal.addEventListener('click', function() {
+    joinUsModal.classList.remove('show');
+});
+window.addEventListener('click', function(event) {
+    if (event.target === joinUsModal) {
+        joinUsModal.classList.remove('show');
+    }
+});
+// Modal logic for Login
+const loginBtn = document.querySelector('.btn-login');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+loginBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    loginModal.classList.add('show');
+});
+closeLoginModal.addEventListener('click', function() {
+    loginModal.classList.remove('show');
+});
+window.addEventListener('click', function(event) {
+    if (event.target === loginModal) {
+        loginModal.classList.remove('show');
+    }
+});
+// Animate login button on submit
+const loginFormModal = document.getElementById('loginFormModal');
+const loginBtnModal = document.getElementById('loginBtnModal');
+// AJAX login for modal
+if (loginFormModal && loginBtnModal) {
+    loginFormModal.addEventListener('submit', function(e) {
+        e.preventDefault();
+        loginBtnModal.innerHTML = 'LOGGING IN <i class="fas fa-spinner fa-spin"></i>';
+        loginBtnModal.disabled = true;
+        const formData = new FormData(loginFormModal);
+        fetch(loginFormModal.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+            body: formData
+        })
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(({status, body}) => {
+            if (status === 200 && body.success) {
+                window.location.href = body.redirect_url || '/dashboard/';
+            } else {
+                throw new Error(body.error || 'Login failed');
+            }
+        })
+        .catch(err => {
+            showToast(err.message, 'error');
+            loginBtnModal.innerHTML = 'LOGIN <i class="fa fa-play fa-xs ms-2"></i>';
+            loginBtnModal.disabled = false;
+        });
+    });
+}
+// Password toggle
+function togglePassword(el) {
+    const input = el.previousElementSibling;
+    if (input.type === 'password') {
+        input.type = 'text';
+        el.classList.remove('fa-eye');
+        el.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        el.classList.remove('fa-eye-slash');
+        el.classList.add('fa-eye');
+    }
+}
+// Show Django messages as toasts on page load
+document.addEventListener('DOMContentLoaded', function() {
+    {% if messages %}
+        {% for message in messages %}
+            showToast("{{ message|escapejs }}", "{{ message.tags|default:'info' }}");
+        {% endfor %}
+    {% endif %}
+});
+    </script>
+    <script>
+    // Registration modal logic
+    (function() {
+        // Open registration modal from desktop nav
+        var desktopSignupBtn = document.querySelector('.btn-signup');
+        var registerModal = document.getElementById('registerModal');
+        var closeRegisterModal = document.getElementById('closeRegisterModal');
+        if (desktopSignupBtn && registerModal) {
+            desktopSignupBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerModal.classList.add('show');
+            });
+        }
+        // Open registration modal from mobile nav
+        var mobileSignupBtn = document.querySelector('.mobile-menu .btn-signup');
+        if (mobileSignupBtn && registerModal) {
+            mobileSignupBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerModal.classList.add('show');
+                // Collapse mobile menu
+                var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                var mobileMenu = document.querySelector('.mobile-menu');
+                var mobileOverlay = document.querySelector('.mobile-overlay');
+                if (mobileMenuBtn && mobileMenu && mobileOverlay) {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+        }
+        // Close registration modal
+        if (closeRegisterModal && registerModal) {
+            closeRegisterModal.addEventListener('click', function() {
+                registerModal.classList.remove('show');
+            });
+        }
+        window.addEventListener('click', function(event) {
+            if (event.target === registerModal) {
+                registerModal.classList.remove('show');
+            }
+        });
+    })();
+    </script>
+    <script>
+    // Registration Modal Animation & Logic
+    (function() {
+        // Modal step logic
+        let modalCurrentStep = 1;
+        const modalTotalSteps = 6;
+        // Show initial typing indicator and message
+        setTimeout(() => {
+            document.getElementById('modalTyping1').style.display = 'none';
+            document.querySelector('#modalStep1 .chat-message').style.display = 'block';
+        }, 1000);
+        // AJAX uniqueness check helpers
+        async function isEmailTaken(email) {
+            const response = await fetch(`/check-email/?email=${encodeURIComponent(email)}`);
+            if (!response.ok) return false;
+            const data = await response.json();
+            return data.exists;
+        }
+        async function isUsernameTaken(username) {
+            const response = await fetch(`/check-username/?username=${encodeURIComponent(username)}`);
+            if (!response.ok) return false;
+            const data = await response.json();
+            return data.exists;
+        }
+        window.modalNextStep = async function(step) {
+            if (await modalValidateStep(step)) {
+                const stepEl = document.getElementById(`modalStep${step}`);
+                modalCreateDataAbsorption(stepEl);
+                document.getElementById(`modalStep${step}`).classList.remove('active');
+                modalHighlightPCIcon();
+                modalCurrentStep = step + 1;
+                if (modalCurrentStep <= modalTotalSteps) {
+                    const nextTyping = document.getElementById(`modalTyping${modalCurrentStep}`);
+                    nextTyping.style.display = 'inline-flex';
+                    setTimeout(() => {
+                        nextTyping.style.display = 'none';
+                        const nextMessage = document.querySelector(`#modalStep${modalCurrentStep} .chat-message`);
+                        nextMessage.style.display = 'block';
+                        document.getElementById(`modalStep${modalCurrentStep}`).classList.add('active');
+                        const chatContainer = document.getElementById('modalChatContainer');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 1000);
+                }
+                modalUpdateProgressBar();
+            }
+        }
+        async function modalValidateStep(step) {
+            const input = document.querySelector(`#modalStep${step} input`);
+            if (input && !input.value) {
+                input.focus();
+                showToast('This field is required.');
+                return false;
+            }
+            // Email uniqueness check
+            if (step === 2) {
+                const email = input.value.trim();
+                if (await isEmailTaken(email)) {
+                    input.focus();
+                    showToast('Email already registered. Please use another.');
+                    return false;
+                }
+            }
+            // Username uniqueness check
+            if (step === 4) {
+                const username = input.value.trim();
+                if (await isUsernameTaken(username)) {
+                    input.focus();
+                    showToast('Username already exists. Please choose another.');
+                    return false;
+                }
+            }
+            // Password strength check
+            if (step === 5) {
+                const password = input.value;
+                let strength = 0;
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                if (strength < 4) {
+                    input.focus();
+                    showToast('Password is not strong enough. Please use a stronger password.');
+                    return false;
+                }
+            }
+            // Password match check
+            if (step === 6) {
+                const password = document.querySelector('#modalStep5 input[name="password1"]').value;
+                const confirm = document.querySelector('#modalStep6 input[name="password2"]').value;
+                if (password !== confirm) {
+                    document.querySelector('#modalStep6 input[name="password2"]').focus();
+                    showToast('Passwords do not match.');
+                    return false;
+                }
+            }
+            return true;
+        }
+        function modalUpdateProgressBar() {
+            const progress = (modalCurrentStep / modalTotalSteps) * 100;
+            document.getElementById('modalProgressBar').style.width = `${progress}%`;
+        }
+        function modalCreateDataAbsorption(element) {
+            const pcIcon = document.querySelector('#registerModal .logo i');
+            if (!pcIcon) return;
+            const rect = element.getBoundingClientRect();
+            const iconRect = pcIcon.getBoundingClientRect();
+            const colors = ['#28a745', '#F0A500', '#17a2b8', '#FFB800', '#006644'];
+            for (let i = 0; i < 12; i++) {
+                const bit = document.createElement('div');
+                bit.className = 'data-bit';
+                bit.style.position = 'fixed';
+                bit.style.left = `${rect.left + rect.width/2 + (Math.random()-0.5)*40}px`;
+                bit.style.top = `${rect.top + rect.height/2 + (Math.random()-0.5)*20}px`;
+                bit.style.width = '10px';
+                bit.style.height = '10px';
+                bit.style.borderRadius = '50%';
+                bit.style.background = colors[Math.floor(Math.random()*colors.length)];
+                bit.style.zIndex = 2000;
+                bit.style.opacity = 0.85;
+                bit.style.transition = 'all 0.9s cubic-bezier(0.23, 1, 0.32, 1)';
+                document.body.appendChild(bit);
+                setTimeout(() => {
+                    bit.style.left = `${iconRect.left + iconRect.width/2 - 5}px`;
+                    bit.style.top = `${iconRect.top + iconRect.height/2 - 5}px`;
+                    bit.style.opacity = 0;
+                    bit.style.transform = 'scale(0.3)';
+                }, 10);
+                setTimeout(() => {
+                    bit.remove();
+                }, 950);
+            }
+        }
+        function modalHighlightPCIcon() {
+            const pcIcon = document.querySelector('#registerModal .logo i');
+            if (pcIcon) {
+                pcIcon.classList.add('glow');
+                setTimeout(() => {
+                    pcIcon.classList.remove('glow');
+                }, 800);
+            }
+        }
+        // Password toggle for modal
+        window.modalTogglePassword = function(icon) {
+            const input = icon.previousElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+        // Password strength checker for modal
+        document.querySelector('#modalStep5 input[name="password1"]').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('modalStrengthBar');
+            const strengthText = document.getElementById('modalStrengthText');
+            // Reset
+            strengthBar.style.width = '0%';
+            strengthBar.style.background = '#dc3545';
+            strengthText.style.color = '#dc3545';
+            strengthText.textContent = 'Weak';
+            if (password.length > 0) {
+                let strength = 0;
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                const width = (strength / 5) * 100;
+                strengthBar.style.width = `${width}%`;
+                if (strength >= 4) {
+                    strengthBar.style.background = '#28a745';
+                    strengthText.style.color = '#28a745';
+                    strengthText.textContent = 'Strong';
+                } else if (strength >= 2) {
+                    strengthBar.style.background = '#ffc107';
+                    strengthText.style.color = '#ffc107';
+                    strengthText.textContent = 'Medium';
+                }
+            }
+        });
+        // Form submission for modal
+        const modalForm = document.getElementById('modalRegistrationForm');
+        if (modalForm) {
+            modalForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                for (let step = 1; step <= modalTotalSteps; step++) {
+                    if (!(await modalValidateStep(step))) {
+                        showToast('Please Confirm your password');
+                        return;
+                    }
+                }
+                const terms = document.getElementById('modalTerms');
+                if (!terms.checked) {
+                    showToast('You must agree to the Terms of Service and Privacy Policy.');
+                    terms.focus();
+                    return;
+                }
+                const submitBtn = modalForm.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = 'CREATING ACCOUNT <i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
+                setTimeout(() => {
+                    document.querySelectorAll('#registerModal .form-step').forEach(step => {
+                        step.style.display = 'none';
+                    });
+                    document.getElementById('modalSuccessMessage').style.display = 'block';
+                    document.getElementById('modalProgressBar').style.width = '100%';
+                    document.getElementById('modalProgressBar').style.background = '#28a745';
+                    // Scroll to bottom
+                    const chatContainer = document.getElementById('modalChatContainer');
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    setTimeout(() => {
+                        modalForm.submit();
+                    }, 3000);
+                }, 1500);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

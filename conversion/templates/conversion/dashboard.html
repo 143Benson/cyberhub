@@ -1,0 +1,602 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<!-- Conversion Dashboard Heading for Confirmation -->
+<div class="dashboard-main-content">
+  <h1 style="color:var(--accent); font-size:2.2rem; margin-bottom: 6px;">File Conversion Dashboard</h1>
+  <p style="color:#fff; margin-bottom: 0;">This is the dedicated conversion dashboard. If you see this, the correct template is being rendered.</p>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" style="padding-top: 24px !important; padding-bottom: 16px !important;">
+  <div class="container">
+    <div class="hero-content" style="flex-direction: column; align-items: center; text-align: center;">
+      <h1 class="typing-text" style="font-size: 2.5rem;">Convert Your Files Instantly</h1>
+      <p class="subtitle" style="max-width: 600px; margin: 0 auto 30px;">Fast, secure, and easy file conversion for all your needs. Drag & drop or select a file to get started.</p>
+      <div id="drop-area" style="background: rgba(255,255,255,0.05); border: 2px dashed var(--accent); border-radius: 18px; padding: 16px 4px; max-width: 500px; margin: 0 auto 12px auto; cursor: pointer; transition: background 0.2s;">
+        <i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; color: var(--accent);"></i>
+        <p style="margin: 16px 0 0; color: #fff;">Drag & drop your file here or <span id="fileSelectText" style="color: var(--accent); text-decoration: underline; cursor: pointer;">click to select</span></p>
+        <input type="file" id="fileElem" style="display:none;" accept=".pdf,.docx,.pptx,.xlsx,.jpg,.png,.txt,.html" />
+        <div style="margin-top: 18px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <i class="far fa-file-pdf" title="PDF"></i>
+          <i class="far fa-file-word" title="Word"></i>
+          <i class="far fa-file-powerpoint" title="PowerPoint"></i>
+          <i class="far fa-file-excel" title="Excel"></i>
+          <i class="far fa-file-image" title="JPG/PNG"></i>
+          <i class="far fa-file-alt" title="TXT"></i>
+          <i class="fas fa-code" title="HTML"></i>
+          <i class="fas fa-drafting-compass" title="CAD"></i>
+        </div>
+        <div id="formatSection" style="display:none; margin-top:20px;">
+          <label for="formatSelect" style="color:#fff;">Choose format to convert to:</label>
+          <select id="formatSelect" class="form-control" style="margin-top:8px;">
+            <option value="">-- Select Format --</option>
+            <option value="pdf2docx">PDF to Word</option>
+            <option value="pdf2pptx">PDF to PowerPoint</option>
+            <option value="pdf2xlsx">PDF to Excel</option>
+            <option value="pdf2jpg">PDF to JPG</option>
+            <option value="pdf2png">PDF to PNG</option>
+            <option value="pdf2txt">PDF to TXT</option>
+            <option value="pdf2html">PDF to HTML</option>
+            <option value="docx2pdf">Word to PDF</option>
+            <option value="pptx2pdf">PowerPoint to PDF</option>
+            <option value="xlsx2pdf">Excel to PDF</option>
+            <option value="jpg2pdf">JPG to PDF</option>
+            <option value="png2pdf">PNG to PDF</option>
+            <option value="txt2pdf">TXT to PDF</option>
+            <option value="html2pdf">HTML to PDF</option>
+            <option value="merge">Merge PDF</option>
+            <option value="split">Split PDF</option>
+            <option value="compress">Compress PDF</option>
+            <option value="rotate">Rotate PDF</option>
+            <option value="edit">Edit PDF</option>
+            <option value="sign">Sign PDF</option>
+            <option value="esign">Convert PDF to eSign</option>
+            <option value="pdf2cad">PDF to CAD</option>
+            <option value="ocr">OCR PDF</option>
+            <option value="protect">Protect PDF</option>
+            <option value="unlock">Unlock PDF</option>
+          </select>
+        </div>
+        <button id="convertNowBtn" class="btn-primary pulse" style="margin-top: 20px; min-width: 220px; display:none;">Convert Now!</button>
+      </div>
+      <div class="cta-buttons" style="justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px !important;">
+        <button class="btn-primary" style="min-width: 160px;" disabled>PDF to Word</button>
+        <button class="btn-primary" style="min-width: 160px;" disabled>Word to PDF</button>
+        <button class="btn-primary" style="min-width: 160px;" disabled>Merge PDF</button>
+        <button class="btn-primary" style="min-width: 160px;" disabled>OCR PDF</button>
+        <!-- Add more as needed -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conversion Process Area -->
+<section class="container" style="margin-bottom: 24px !important;">
+  <div id="conversionProcess" style="display: none;">
+    <div style="margin-bottom: 24px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="flex: 1;">
+          <div class="progress-bar" style="height: 8px; background: rgba(240,165,0,0.08); border-radius: 6px;">
+            <div id="progress" style="height: 100%; width: 0; background: linear-gradient(90deg, #00fff7 0%, #F0A500 100%); border-radius: 6px; transition: width 0.5s;"></div>
+          </div>
+        </div>
+        <span id="progressText" style="color: #fff; font-size: 1rem;">0%</span>
+      </div>
+    </div>
+    <div id="filePreview" style="margin-bottom: 18px; color: #fff;">
+      <!-- File preview will appear here -->
+    </div>
+    <div id="conversionResult" style="display: none;">
+      <a href="#" class="btn-primary" id="downloadBtn">Download Your File</a>
+      <button class="btn-secondary" id="convertAnotherBtn" style="margin-left: 12px;">Convert Another</button>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section" style="background: rgba(0,0,0,0.3); margin-top: 18px !important;">
+  <div class="container">
+    <div class="section-header">
+      <h2>All-in-One <span>PDF & File Tools</span></h2>
+      <p class="section-subtitle">Convert, edit, and manage your documents with our powerful suite of tools.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-number">01</div>
+        <h3>Convert PDF to Word, Excel, PowerPoint, and more</h3>
+        <div class="feature-line"></div>
+        <p>Effortlessly transform your PDFs into editable formats for easy updates and collaboration.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">02</div>
+        <h3>Merge, Split, Compress, and Edit PDFs</h3>
+        <div class="feature-line"></div>
+        <p>Organize and optimize your documents with advanced PDF editing tools.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">03</div>
+        <h3>OCR for Scanned Documents</h3>
+        <div class="feature-line"></div>
+        <p>Extract text from scanned PDFs and images using advanced Optical Character Recognition.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">04</div>
+        <h3>Protect, Unlock, and Sign PDFs</h3>
+        <div class="feature-line"></div>
+        <p>Secure your files with passwords, remove restrictions, and add digital signatures.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">05</div>
+        <h3>Convert to CAD & More</h3>
+        <div class="feature-line"></div>
+        <p>Export PDFs to CAD and other specialized formats for professional workflows.</p>
+      </div>
+    </div>
+    <div style="margin-top: 40px; text-align: center;">
+      <h3 style="color: var(--accent); margin-bottom: 10px;">Why Choose CyberHub Conversion?</h3>
+      <p style="color: #fff; max-width: 700px; margin: 0 auto;">Lightning-fast conversions, privacy-first processing, and a seamless user experience—trusted by professionals and students alike.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="container" style="margin: 60px auto;">
+  <div class="section-header">
+    <h2>What Our Users Say</h2>
+  </div>
+  <div class="features-grid" style="gap: 18px;">
+    <div class="feature-card">
+      <p>“The best PDF converter I’ve used—super fast and easy!”</p>
+      <div style="color: var(--accent); font-weight: 600;">— Jane, Student</div>
+    </div>
+    <div class="feature-card">
+      <p>“I love the drag-and-drop and all the editing tools in one place.”</p>
+      <div style="color: var(--accent); font-weight: 600;">— David, Architect</div>
+    </div>
+    <div class="feature-card">
+      <p>“Secure, reliable, and the results are always perfect.”</p>
+      <div style="color: var(--accent); font-weight: 600;">— Mercy, Lawyer</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact/Help Section -->
+<section class="container" style="margin-bottom: 60px;">
+  <div class="section-header">
+    <h2>Need Help?</h2>
+    <p class="section-subtitle">Visit our <a href="#" style="color: var(--accent); text-decoration: underline;">Help Center</a> or <a href="#" style="color: var(--accent); text-decoration: underline;">Contact Us</a> for support.</p>
+  </div>
+</section>
+
+<!-- Toast Container for notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// Drag-and-drop logic (UI only, no backend)
+const dropArea = document.getElementById('drop-area');
+const fileElem = document.getElementById('fileElem');
+const formatSection = document.getElementById('formatSection');
+const formatSelect = document.getElementById('formatSelect');
+const convertNowBtn = document.getElementById('convertNowBtn');
+const ctaButtons = document.querySelector('.cta-buttons');
+let selectedFile = null;
+
+// Only trigger file dialog when clicking the 'click to select' text
+const fileSelectText = document.getElementById('fileSelectText');
+fileSelectText.addEventListener('click', (e) => {
+  e.stopPropagation();
+  fileElem.click();
+});
+
+// Show format dropdown and convert button after file selection
+function showFormatSection() {
+  formatSection.style.display = 'block';
+  convertNowBtn.style.display = 'inline-block';
+}
+
+dropArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropArea.style.background = 'rgba(240,165,0,0.08)';
+});
+dropArea.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  dropArea.style.background = 'rgba(255,255,255,0.05)';
+});
+dropArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropArea.style.background = 'rgba(255,255,255,0.05)';
+  fileElem.files = e.dataTransfer.files;
+  selectedFile = fileElem.files[0];
+  showFilePreview();
+  showFormatSection();
+});
+fileElem.addEventListener('change', () => {
+  selectedFile = fileElem.files[0];
+  showFilePreview();
+  showFormatSection();
+});
+
+function showFilePreview() {
+  const preview = document.getElementById('filePreview');
+  const files = fileElem.files;
+  if (!files.length) return;
+  preview.innerHTML = '';
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const icon = getFileIcon(file.name);
+    preview.innerHTML += `<div style='display:flex;align-items:center;gap:10px;margin-bottom:8px;'><i class='${icon}' style='color:var(--accent);font-size:1.5rem;'></i> <span>${file.name}</span></div>`;
+  }
+  document.getElementById('conversionProcess').style.display = 'block';
+}
+
+function getFileIcon(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  switch(ext) {
+    case 'pdf': return 'far fa-file-pdf';
+    case 'docx': return 'far fa-file-word';
+    case 'pptx': return 'far fa-file-powerpoint';
+    case 'xlsx': return 'far fa-file-excel';
+    case 'jpg': case 'jpeg': case 'png': return 'far fa-file-image';
+    case 'txt': return 'far fa-file-alt';
+    case 'html': return 'fas fa-code';
+    case 'dwg': case 'dxf': return 'fas fa-drafting-compass';
+    default: return 'far fa-file';
+  }
+}
+
+// Conversion logic
+convertNowBtn.addEventListener('click', function() {
+  if (!selectedFile || !formatSelect.value) {
+    showToast('Please select a file and a format.', 'error');
+    return;
+  }
+  // Hide file/format section and show only progress/result
+  dropArea.style.display = 'none';
+  document.getElementById('conversionProcess').style.display = 'block';
+  document.getElementById('progress').style.width = '0%';
+  document.getElementById('progressText').innerText = '0%';
+  document.getElementById('conversionResult').style.display = 'block';
+  document.getElementById('filePreview').innerHTML = '';
+  if (ctaButtons) ctaButtons.style.display = 'none';
+
+  const formData = new FormData();
+  formData.append('uploaded_file', selectedFile);
+  formData.append('conversion_type', formatSelect.value);
+  // Send AJAX request
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/conversion/convert/', true);
+  xhr.upload.onprogress = function(e) {
+    if (e.lengthComputable) {
+      const percent = Math.round((e.loaded / e.total) * 100);
+      document.getElementById('progress').style.width = percent + '%';
+      document.getElementById('progressText').innerText = percent + '%';
+    }
+  };
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const resp = JSON.parse(xhr.responseText);
+      if (resp.success) {
+        // Show thumbnail and download link
+        const preview = document.getElementById('filePreview');
+        preview.innerHTML = `<img src="${resp.thumbnail_url}" alt="Thumbnail" style="max-width:120px;max-height:120px;display:block;margin:0 auto 10px;" />`;
+        document.getElementById('downloadBtn').href = resp.download_url;
+        document.getElementById('conversionResult').style.display = 'block';
+        document.getElementById('progress').style.width = '100%';
+        document.getElementById('progressText').innerText = '100%';
+        showToast('Conversion successful!', 'success');
+        launchConfetti();
+      } else {
+        showToast(resp.error || 'Conversion failed.', 'error');
+        // Show file/format section again for retry
+        dropArea.style.display = 'block';
+        document.getElementById('conversionProcess').style.display = 'none';
+      }
+    } else {
+      showToast('Conversion failed.', 'error');
+      dropArea.style.display = 'block';
+      document.getElementById('conversionProcess').style.display = 'none';
+    }
+  };
+  xhr.onerror = function() {
+    showToast('An error occurred during conversion.', 'error');
+    dropArea.style.display = 'block';
+    document.getElementById('conversionProcess').style.display = 'none';
+  };
+  xhr.send(formData);
+});
+
+// Reset everything for a new conversion
+const convertAnotherBtn = document.getElementById('convertAnotherBtn');
+convertAnotherBtn.addEventListener('click', function() {
+  // Reset file input
+  fileElem.value = '';
+  selectedFile = null;
+  // Reset format dropdown
+  formatSelect.value = '';
+  // Hide progress/result, show file/format section
+  document.getElementById('conversionProcess').style.display = 'none';
+  dropArea.style.display = 'block';
+  document.getElementById('filePreview').innerHTML = '';
+  formatSection.style.display = 'none';
+  convertNowBtn.style.display = 'none';
+  if (ctaButtons) ctaButtons.style.display = 'flex';
+});
+
+// Toast notification logic (copied from app)
+function showToast(message, type) {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerText = message;
+  document.getElementById('toastContainer').appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 500);
+  }, 5000);
+}
+</script>
+<div id="confetti-container"></div>
+
+<script>
+// Confetti animation
+function launchConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+  confettiContainer.innerHTML = '';
+  for (let i = 0; i < 40; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.backgroundColor = randomColor();
+    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+    confettiContainer.appendChild(confetti);
+  }
+  setTimeout(() => {
+    confettiContainer.innerHTML = '';
+  }, 2200);
+}
+function randomColor() {
+  const colors = ['#F0A500', '#28a745', '#00fff7', '#FF0000', '#17a2b8', '#fff'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+</script>
+
+<style>
+/* Toast Notifications (copied from app) */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+.toast {
+  min-width: 250px;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  animation: toastIn 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #fff;
+}
+.toast.success { background-color: #28a745; }
+.toast.error { background-color: #dc3545; }
+.toast.info { background-color: #17a2b8; }
+.toast::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: rgba(255,255,255,0.5);
+  animation: progress 5s linear forwards;
+}
+@keyframes progress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+@keyframes toastIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.toast.hide {
+  animation: toastOut 0.5s ease-in forwards;
+}
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+/* Download button on the right */
+#conversionResult {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+#confetti-container {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+}
+.confetti {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 18px;
+  opacity: 0.85;
+  border-radius: 3px;
+  animation: confetti-fall 2s cubic-bezier(.62,.04,.36,1.01) forwards;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(90vh) rotateZ(360deg);
+    opacity: 0.7;
+  }
+}
+/* Themed dropdown styling */
+#formatSelect.form-control {
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#formatSelect.form-control:focus {
+  border-color: #00fff7;
+  box-shadow: 0 0 0 2px #00fff733;
+}
+#formatSelect.form-control option {
+  background: #222;
+  color: #fff;
+}
+
+/* Responsive overhaul for mobile friendliness */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 24px 8px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+.hero-content {
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+.dashboard-main-content {
+  padding-top: 100px !important;
+  margin-bottom: 8px !important;
+}
+.hero {
+  padding-top: 18px !important;
+  padding-bottom: 8px !important;
+}
+#drop-area {
+  margin-bottom: 8px !important;
+  padding: 12px 2px !important;
+}
+.cta-buttons {
+  margin-bottom: 6px !important;
+}
+section.container {
+  margin-bottom: 14px !important;
+}
+.features-section {
+  margin-top: 10px !important;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+.feature-card {
+  min-width: 0;
+  font-size: 1rem;
+  padding: 14px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.section-header h2, .section-header p {
+  word-break: break-word;
+}
+@media (max-width: 900px) {
+  .container {
+    max-width: 98vw;
+    padding: 16px 2vw;
+  }
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    max-width: 100vw;
+    padding: 8px 2vw;
+    border-radius: 10px;
+  }
+  .hero-content {
+    padding: 0 2px;
+  }
+  .dashboard-main-content {
+    padding-top: 70px !important;
+    margin-bottom: 2px !important;
+  }
+  .hero {
+    padding-top: 4px !important;
+    padding-bottom: 2px !important;
+  }
+  #drop-area {
+    margin-bottom: 2px !important;
+    padding: 4px 1px !important;
+  }
+  .cta-buttons {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 2px !important;
+  }
+  #conversionResult {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+  .features-section, .container, .section-header, .features-grid, .feature-card {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .feature-card {
+    min-width: 0;
+    font-size: 0.98rem;
+    padding: 8px 4px;
+  }
+  .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  h1, h2, h3 {
+    font-size: 1.1rem !important;
+  }
+  .typing-text {
+    font-size: 1.1rem !important;
+  }
+  .progress-bar {
+    height: 6px !important;
+  }
+  .dashboard-main-content {
+    padding-top: 70px !important;
+    margin-bottom: 2px !important;
+  }
+  .container, .hero, .cta-buttons, section.container, .features-section {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  #drop-area {
+    padding: 4px 1px !important;
+    margin-bottom: 2px !important;
+  }
+}
+</style>
+
+{% endblock %}

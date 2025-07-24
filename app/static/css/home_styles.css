@@ -1184,3 +1184,31 @@
     flex: 1 1 250px;
     max-width: 350px;
 }
+/* Add padding to sections that follow the fixed header */
+.hero, 
+.services-section, 
+.features-section, 
+.stats-section, 
+.cta-section {
+    padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+    .hero, 
+    .services-section, 
+    .features-section, 
+    .stats-section, 
+    .cta-section {
+        padding-top: 70px;
+    }
+}
+/* Add padding to main content to prevent overlap with fixed header */
+body {
+    padding-top: 80px; /* Adjust this value to match your header height */
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Slightly smaller padding for mobile */
+    }
+}
